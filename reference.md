@@ -1,0 +1,1 @@
+- [Brad Traversy node course](https://www.youtube.com/watch?v=eB9Fq9I5ocs&list=PLillGF-RfqbZ2ybcoD2OaabW2P7Ws8CWu&index=23)
