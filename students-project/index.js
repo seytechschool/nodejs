@@ -11,15 +11,17 @@ const port = process.env.PORT || 5000;
 // app
 const app = express();
 
-// DB
+// db
 const uri = process.env.MONGO_DB_URI;
 try {
   mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 } catch (err) {
   console.log('err', err);
+  throw err;
 }
 mongoose.connection.on('error', (err) => {
   console.log(err);
+  throw err;
 });
 
 // middlewares
