@@ -6,6 +6,10 @@ const student = new Schema({
   firstName: { type: String, trim: true, default: '' },
   lastName: { type: String, default: '' },
   bio: { type: String, default: '' },
+  email: {
+    type: String,
+    unique: true,
+  },
   imageUrl: {
     type: String,
     index: true,

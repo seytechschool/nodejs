@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Student = require('../models/Students');
-const { ReplSet } = require('mongodb');
+// const { ReplSet } = require('mongodb');
 
 // index
 router.get('/', (req, res) => {
@@ -105,3 +105,5 @@ router.put('/student', async (req, res) => {
   }
 });
 module.exports = router;
+
+// GET - passed students (grade) give it as a class homework
