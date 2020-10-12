@@ -1,7 +1,5 @@
 # NODEJS CLASS
 
-### Folders:
-- STEPS 
-- students-project
-
-
+- Example app located here:
+- client: https://github.com/seytechschool/students-client
+- backend:
