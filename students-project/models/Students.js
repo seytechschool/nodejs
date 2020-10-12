@@ -1,23 +1,40 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
 
-// creating a schema
-const student = new Schema({
-  firstName: { type: String, trim: true, default: '' },
-  lastName: { type: String, default: '' },
-  bio: { type: String, default: '' },
-  email: {
+// Create a Schema
+const studentSchema = mongoose.Schema({
+  firstName: {
     type: String,
-    unique: true,
+    required: true,
+    trim: true,
+    default: '',
   },
-  imageUrl: {
+  lastName: {
+    type: String,
+    required: true,
+    default: '',
+  },
+  email: {
     type: String,
     index: true,
     unique: true,
+    required: true,
   },
-  grade: { type: Number, default: 0 },
+  bio: {
+    type: String,
+    default: '',
+  },
+  imageUrl: {
+    type: String,
+    default: '',
+  },
+  grade: {
+    type: Number,
+    default: 0,
+  },
 });
 
-// To use our schema definition, we need to convert our student into a Model we can work with.
-const Student = mongoose.model('Student', student);
-module.exports = Student;
+// Create a Model
+
+const Students = mongoose.model('Students', studentSchema);
+
+module.exports = Students;

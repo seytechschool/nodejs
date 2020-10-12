@@ -1,17 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/Students');
-// const { ReplSet } = require('mongodb');
+const Students = require('../models/Students');
 
-// index
+// api index
 router.get('/', (req, res) => {
-  res.send('Students API. Check out /api/... routes');
+  res.send('API HOME PAGE! Check /api/.. routes');
 });
 
 // GET - all students
-router.get('/all', async (req, res) => {
+router.get('/students/all', async (req, res) => {
+  // if(req.query.grade) {
+  //   // send only passed students
+  // } else {
+  //   // send all students
+  // }
   try {
-    const allStudents = await Student.find({});
+    const allStudents = await Students.find({});
     res.json(allStudents);
   } catch (err) {
     console.log(err);
@@ -19,91 +23,74 @@ router.get('/all', async (req, res) => {
   }
 });
 
-// GET - single student
-router.get('/student', async (req, res) => {
-  // OR we can use params instead:
-  // EX: /student/:id
-  // const _id = req.params.id
-  const _id = req.query.id;
-  try {
-    const singleStudent = await Student.findById(_id).exec();
-    res.json(singleStudent);
-  } catch (err) {
-    res.send(err.message);
-    throw err;
-  }
-});
-
 // POST - a student
-router.post('/student', async (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const bio = req.body.bio;
-  const imageUrl = req.body.imageUrl;
-  const grade = req.body.grade;
-
-  console.log(req.body);
-
+router.post('/students', async (req, res) => {
+  // const firstName = req.body.firstName ;
+  // const lastName = req.body.lastName;
+  // const bio = req.body.bio;
+  // const imageUrl = req.body.imageUrl;
+  // const grade = req.body.grade;
   try {
-    // shortcut: await Student.create(body)
-    const createdUser = await Student.create({
-      firstName,
-      lastName,
-      bio,
-      imageUrl,
-      grade,
+    const postedStudent = await Students.create(req.body);
+    res.json({
+      message: 'Successfully posted a Student',
+      data: postedStudent,
     });
-    if (createdUser) {
-      const success = {
-        message: 'Student sucessfully created!',
-        data: createdUser,
-      };
-      res.json(success);
-    }
   } catch (err) {
     res.send(err.message);
+    console.log(err);
     throw err;
   }
 });
 
 // DELETE - a student
-router.delete('/student', async (req, res) => {
+router.delete('/students', async (req, res) => {
   const _id = req.query.id;
+  // const _id = req.params.id;
 
   try {
-    const deletedUser = await Student.findByIdAndDelete(_id);
-    if (deletedUser) {
-      const success = {
-        message: 'Student sucessfully deleted!',
-        data: deletedUser,
-      };
-      res.json(success);
-    }
+    const deletedStudent = await Students.findByIdAndDelete(_id);
+    res.json({
+      message: 'Successfully deleted a Student',
+      data: deletedStudent,
+    });
   } catch (err) {
     res.send(err.message);
+    console.log(err);
     throw err;
   }
 });
 
 // UPDATE - a student
-router.put('/student', async (req, res) => {
-  const _id = req.query.id;
-  const { firstName } = req.query;
+router.put('/students', async (req, res) => {
+  const { id } = req.query;
+  const { firstName, lastName, email, bio } = req.query;
 
   try {
-    const updatedUser = await Student.findByIdAndUpdate(_id, { firstName });
-    if (updatedUser) {
-      const success = {
-        message: 'Student sucessfully updated!',
-        data: updatedUser,
-      };
-      res.json(success);
-    }
+    const updatedStudent = await Students.findByIdAndUpdate(id, {
+      firstName,
+      lastName,
+      email,
+      bio,
+    });
+    res.json({
+      message: 'Successfully updated a Student',
+      data: updatedStudent,
+    });
   } catch (err) {
     res.send(err.message);
+    console.log(err);
     throw err;
   }
 });
-module.exports = router;
 
-// GET - passed students (grade) give it as a class homework
+// fetch.put(`htps:::?id=${idValue}&firstName=${firstNameValue}`)
+// GET - passed students
+// passed students grades > 60
+// put this logic
+// send the data back
+
+// GET - a single student
+// _id, email
+
+module.exports = router;
